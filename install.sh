@@ -10,28 +10,42 @@ display_info()
     echo ""
 }
 
+
+exec_as_root()
+{
+    if [ $EUID -eq 0 ]; then
+        echo "Run as super user ..."
+        eval "$1"
+    else
+        echo "Run as user: $(whoami)..."
+        eval "sudo $1"
+    fi
+}
+
+
 # --- Add ppa ---
 display_info "Updating ..."
-apt update && apt install software-properties-common -y
+exec_as_root "apt update" && \
+    exec_as_root "apt install software-properties-common -y"
 
 display_info "Adding vim ppa ..."
-add-apt-repository ppa:jonathonf/vim -y && \
+exec_as_root "add-apt-repository ppa:jonathonf/vim -y" && \
     display_info "Successfully added vim ppa"
 
 display_info "Adding bashtop ppa ..."
-add-apt-repository ppa:bashtop-monitor/bashtop -y && \
+exec_as_root "add-apt-repository ppa:bashtop-monitor/bashtop -y" && \
     display_info "Successfully added bashtop ppa"
 
 
 # --- Apt install ---
 display_info "Installing applications ..."
-apt update && apt install \
+exec_as_root "apt update" && exec_as_root "apt install \
     zsh \
     byobu \
     vim exuberant-ctags\
     cmake python3-dev python3-pip build-essential \
     git curl \
-    -y && display_info "Applications installed"
+    -y" && display_info "Applications installed"
 
 
 # --- Pip install ---
