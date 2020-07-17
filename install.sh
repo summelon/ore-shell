@@ -23,27 +23,15 @@ exec_as_root()
 }
 
 
-# --- Add ppa ---
-display_info "Updating ..."
-exec_as_root "apt update" && \
-    exec_as_root "apt install software-properties-common -y"
-
-display_info "Adding vim ppa ..."
-exec_as_root "add-apt-repository ppa:jonathonf/vim -y" && \
-    display_info "Successfully added vim ppa"
-
-display_info "Adding bashtop ppa ..."
-exec_as_root "add-apt-repository ppa:bashtop-monitor/bashtop -y" && \
-    display_info "Successfully added bashtop ppa"
-
 
 # --- Apt install ---
 display_info "Installing applications ..."
-exec_as_root "apt update" && exec_as_root "apt install \
+exec_as_root "pacman -Syu" && exec_as_root "pacman -S \
     zsh \
     byobu \
+    bashtop \
     vim exuberant-ctags\
-    cmake python3-dev python3-pip build-essential \
+    cmake build-essential \
     git curl \
     -y" && display_info "Applications installed"
 
