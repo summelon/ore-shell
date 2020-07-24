@@ -26,14 +26,15 @@ exec_as_root()
 
 # --- Apt install ---
 display_info "Installing applications ..."
-exec_as_root "pacman -Syu" && exec_as_root "pacman -S \
+exec_as_root "pacman -Syyu" && exec_as_root "pacman -S \
     zsh \
     byobu \
     bashtop \
-    vim exuberant-ctags\
-    cmake build-essential \
+    vim \
+    ctags\
+    cmake \
     git curl \
-    -y" && display_info "Applications installed"
+    -yy" && display_info "Applications installed"
 
 
 # --- Pip install ---
