@@ -6,5 +6,6 @@
 ```shell=
 git clone https://github.com/summelon/ore-shell
 cd ore-shell
-sh ./install.sh
+chmod 755 install.sh
+bash ./install.sh
 ```
