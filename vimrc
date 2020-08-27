@@ -168,6 +168,7 @@ let g:ycm_extra_conf_vim_data = [
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_min_num_identifier_candidate_chars = 2
+autocmd FileType * set completeopt+=popup
 
 
 " Plug 'vim-airline/vim-airline'
