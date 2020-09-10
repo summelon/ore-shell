@@ -40,9 +40,7 @@ exec_as_root "add-apt-repository ppa:bashtop-monitor/bashtop -y" && \
 # --- Apt install ---
 display_info "Installing applications ..."
 exec_as_root "apt update" && exec_as_root "apt install \
-    zsh \
-    byobu \
-    vim exuberant-ctags\
+    zsh byobu vim \
     cmake python3-dev python3-pip build-essential \
     git curl \
     -y" && display_info "Applications installed"
@@ -52,6 +50,15 @@ exec_as_root "apt update" && exec_as_root "apt install \
 display_info "Installing python module ..."
 python3 -m pip install -U \
     flake8 pylint
+
+# --- Build ---
+display_info "Building universal-ctags ..."
+git clone https://github.com/universal-ctags/ctags
+cd ctags
+./autogen.sh && \
+    ./configure --prefix=$HOME && \
+    make && \
+    make install
 
 
 # --- Vim ---

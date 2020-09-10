@@ -46,6 +46,8 @@ Plug 'flazz/vim-colorschemes'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 " Tagbar
 Plug 'majutsushi/tagbar'
+" vim-gutentags
+Plug 'ludovicchabant/vim-gutentags'
 " Auto pair
 " rm -rf .vim/view
 " Plug 'jiangmiao/auto-pairs'
@@ -92,6 +94,7 @@ set smartcase		" Do smart case matching
 set incsearch		" Incremental search
 set autowrite		" Automatically save before commands like :next and :make
 set hidden		" Hide buffers when they are abandoned
+set tags=./.tags;,.tags
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
@@ -136,8 +139,8 @@ let g:ale_sign_column_always = 1
 let g:ale_set_highlights = 0
 let g:ale_echo_msg_format = '[#%linter%#] %s [%severity%]'
 let g:ale_statusline_format = ['E•%d', 'W•%d', 'OK']
-let g:ale_sign_error = '⬤'
-let g:ale_sign_warning = '⬤'
+let g:ale_sign_error = '▶'
+let g:ale_sign_warning = '▶'
 let g:ale_echo_msg_error_str = '✹ Error'
 let g:ale_echo_msg_warning_str = '⚠ Warning'
 highlight GruvboxRedSign ctermfg=167 ctermbg=None guifg=#fb4934 guibg=#3c3836
@@ -251,6 +254,28 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " Plug 'majutsushi/tagbar'
 " apt install exuberant-ctags
+" Plug 'ludovicchabant/vim-gutentags'
+" gutentags search upper recursively, stop if meet these files / folders
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+
+" Ctags file name
+let g:gutentags_ctags_tagfile = '.tags'
+
+" vim nmap put all tag files into ~/.cache/tags
+let s:vim_tags = expand('~/.cache/tags')
+let g:gutentags_cache_dir = s:vim_tags
+
+" Ctags argument
+let g:gutentags_ctags_extra_args = []
+let g:gutentags_ctags_extra_args += ['--fields=+niazS', '--extras=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+nmap <C-]> :YcmCompleter GoTo<CR>
+
+" Create ~/.cache/tags if it not exists
+if !isdirectory(s:vim_tags)
+   silent! call mkdir(s:vim_tags, 'p')
+endif
 
 " Plug 'Chiel92/vim-autoformat'
 let g:autoformat_autoindent = 0
