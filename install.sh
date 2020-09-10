@@ -43,6 +43,11 @@ exec_as_root "apt update" && exec_as_root "apt install \
     zsh byobu vim \
     cmake python3-dev python3-pip build-essential \
     git curl \
+    gcc make \
+    pkg-config autoconf automake \
+    python3-docutils \
+    libseccomp-dev libjansson-dev \
+    libyaml-dev libxml2-dev \
     -y" && display_info "Applications installed"
 
 
@@ -56,9 +61,10 @@ display_info "Building universal-ctags ..."
 git clone https://github.com/universal-ctags/ctags
 cd ctags
 ./autogen.sh && \
-    ./configure --prefix=$HOME && \
+    ./configure && \
     make && \
-    make install
+    exec_as_root "make install"
+cd ..
 
 
 # --- Vim ---
