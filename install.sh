@@ -67,7 +67,11 @@ display_info "Preparing environment for zsh ..."
 CHSH=no RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 cp zshrc ""$HOME"/.zshrc" && \
     sed -i -e "/^export ZSH/c \export ZSH=""$HOME"/.oh-my-zsh"" "$HOME"/.zshrc
+    # Spaceship theme
+git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
+    # Auto-Suggestions
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    # Syntax-highlighting
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 display_info "ZSH setting done"
 
