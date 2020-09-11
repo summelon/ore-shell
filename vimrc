@@ -158,7 +158,13 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 let g:ale_python_pylint_options='--rffile=~/.pylintrc'
 let g:ale_linters = {
             \   'python': ['flake8', 'pylint'],
-            \   'javascript': ['eslint']}
+            \   'javascript': ['eslint'],
+            \   'cpp': ['gcc', 'cppcheck']}
+    " C++ in ALE
+let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
+let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
+let g:ale_c_cppcheck_options = ''
+let g:ale_cpp_cppcheck_options = ''
 
 
 " Plug 'valloric/youcompleteme'
