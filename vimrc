@@ -212,12 +212,6 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 
-" Plug 'skywind3000/asyncrun.vim'
-let g:asyncrun_open = 6
-let g:asyncrun_bell = 1
-autocmd FileType cpp nnoremap <F5> :call asyncrun#quickfix_toggle(6)<cr>
-
-
 " Plug 'tmhedberg/SimpylFold'
 let g:SimpylFold_docstring_preview = 1
 set foldmethod=indent
@@ -278,6 +272,16 @@ let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 nmap <C-]> :YcmCompleter GoTo<CR>
 
+
+" Plug 'skywind3000/asyncrun.vim'
+let g:asyncrun_open = 6
+let g:asyncrun_bell = 1
+autocmd FileType cpp nnoremap <silent> <Plug>(close_quickfix) :call asyncrun#quickfix_toggle(6)<cr>
+autocmd FileType cpp nnoremap <silent> <Plug>(build_cpp) <ESC> :w <cr> :AsyncRun -mode=term g++ -std=c++11 -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+autocmd FileType cpp nnoremap <silent> <Plug>(run_cpp) :AsyncRun -mode=term -raw -cwd=$(VIM_FILEDIR) "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+autocmd FileType cpp nnoremap <silent> <Plug>(run_and_build) <ESC> :w <cr> :AsyncRun -post=q\ <bar>\ execute\ "normal\ \<Plug>(run_cpp)" -mode=term g++ -std=c++11 -Wall -O2 "$(VIM_FILEPATH)" -o "$(VIM_FILEDIR)/$(VIM_FILENOEXT)" <cr>
+
+
 " Create ~/.cache/tags if it not exists
 if !isdirectory(s:vim_tags)
    silent! call mkdir(s:vim_tags, 'p')
@@ -297,6 +301,13 @@ call quickui#menu#install('&Plugin', [
 call quickui#menu#install('&Hotkey', [
             \ ["&Resize", 'vertical resize 85', '']
             \ ])
+
+
+call quickui#menu#install('&C++', [
+            \ ["Build", 'execute "normal \<Plug>(build_cpp)"', ''],
+            \ ["&Run", 'execute "normal \<Plug>(run_cpp)"', ''],
+            \ ["&Build and Run", 'execute "normal \<Plug>(run_and_build)"', ''],
+            \ ["&Close Quickfix", 'execute "normal \<Plug>(close_quickfix)"', '']])
 
 " install a 'File' menu, use [text, command] to represent an item.
 call quickui#menu#install('&File', [
