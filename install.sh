@@ -40,6 +40,7 @@ exec_as_root "add-apt-repository ppa:bashtop-monitor/bashtop -y" && \
 # --- Apt install ---
 display_info "Installing applications ..."
 exec_as_root "apt update" && exec_as_root "apt install \
+    ncurses-term \
     zsh byobu vim \
     cmake python3-dev python3-pip build-essential \
     git curl \
@@ -70,10 +71,11 @@ cd ..
 
 # --- Vim ---
 display_info "Preparing environment for vim ..."
-cp vimrc ""$HOME"/.vimrc" && cp filetype.vim  "${HOME}/.vim/" && \
+cp vimrc ""$HOME"/.vimrc" && \
     display_info "Moved vimrc to "$HOME", Installing vim plugin ..."
 vim -es -u ""$HOME"/.vimrc" -i NONE -c "PlugInstall" -c "qa" && \
     display_info "Installation done"
+cp filetype.vim  ""$HOME"/.vim/filetype.vim"
 
 
 # --- ZSH ---
@@ -104,5 +106,5 @@ if [ ! -d ""$HOME"/.byobu/" ]; then
 fi
 echo "set -g default-shell /usr/bin/zsh" >> ~/.byobu/.tmux.conf
 echo "set -g default-command /usr/bin/zsh" >> ~/.byobu/.tmux.conf
-echo "set -g default-terminal \"xterm-256color\"" >> ~/.byobu/.tmux.conf
+echo "set -g default-terminal \"tmux-256color\"" >> ~/.byobu/.tmux.conf
 display_info "Byobu setting done"
