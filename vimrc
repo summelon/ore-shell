@@ -65,6 +65,8 @@ Plug 'mattn/emmet-vim'
 Plug 'ryanoasis/vim-devicons'
 " Cmake syntax
 Plug 'vhdirk/vim-cmake'
+" Floaterm
+Plug 'voldikss/vim-floaterm'
 call plug#end()
 
 
@@ -356,3 +358,16 @@ noremap <space><space> :call quickui#menu#open()<cr>
 xmap ga <Plug>(EasyAlign)
 " " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+
+" Plug 'voldikss/vim-floaterm'
+let g:floaterm_autoclose = 1
+hi FloatermBorder ctermfg=177
+nnoremap   <leader>nf   :FloatermNew<CR>
+tnoremap   <leader>nf   <C-\><C-n>:FloatermNew<CR>
+nnoremap   <leader>p    :FloatermPrev<CR>
+tnoremap   <leader>p    <C-\><C-n>:FloatermPrev<CR>
+nnoremap   <leader>n    :FloatermNext<CR>
+tnoremap   <leader>n    <C-\><C-n>:FloatermNext<CR>
+nnoremap   <leader>t    :FloatermToggle<CR>
+tnoremap   <leader>t    <C-\><C-n>:FloatermToggle<CR>
