@@ -125,3 +125,10 @@ fi
 
 # Set bat theme
 export BAT_THEME="Sublime Snazzy"
+# time format
+TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S'
+# Change pager(man) from less to vim
+export MANPAGER="/bin/sh -c \"col -b | vim -c 'set ft=man ts=8 nomod nolist nonu noma' -\""
+
+# Add time stamp for oh-my-zsh theme spaceship
+export SPACESHIP_TIME_SHOW=true
