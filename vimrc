@@ -29,7 +29,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Bracket color
-Plug 'kien/rainbow_parentheses.vim'
+Plug 'luochen1990/rainbow'
 " Run .cpp
 Plug 'skywind3000/asyncrun.vim'
 " Auto Complete
@@ -61,6 +61,10 @@ Plug 'skywind3000/vim-quickui'
 Plug 'vim-scripts/Align'
 " HTML5
 Plug 'mattn/emmet-vim'
+" Customize icon
+Plug 'ryanoasis/vim-devicons'
+" Cmake syntax
+Plug 'vhdirk/vim-cmake'
 call plug#end()
 
 
@@ -107,6 +111,12 @@ if has("autocmd")
   filetype plugin indent on
 endif
 
+" Enable local vimrc
+set exrc
+set secure
+
+" File type alias
+source $HOME/.vim/filetype.vim
 
 " Language setting---------------------------------------------
 " For cpp
@@ -123,6 +133,13 @@ nnoremap <C-L> :cp <cr>
 
 
 " Plugin setting--------------------------------------------------------------
+" Plug 'luochen1990/rainbow'
+let g:rainbow_conf = {
+            \   'separately': { 'cmake': 0 }
+            \}
+let g:rainbow_active = 1
+
+
 " Plug 'flazz/vim-colorschemes'
 set t_Co=256
 colorscheme gruvbox
@@ -152,6 +169,8 @@ let g:ale_lint_delay = 500
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
 let g:ale_linters_explicit=0
+let g:airline#extensions#lae#enabled=1
+let g:ale_c_parse_makefile=1
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
@@ -159,57 +178,36 @@ let g:ale_python_pylint_options='--rffile=~/.pylintrc'
 let g:ale_linters = {
             \   'python': ['flake8', 'pylint'],
             \   'javascript': ['eslint'],
-            \   'cpp': ['gcc', 'cppcheck']}
+            \   'cpp': ['cc', 'cppcheck'],
+            \   'cuda': ['nvcc']}
     " C++ in ALE
-let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
-let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
+let g:ale_c_cc_options = '-Wall -O2 -std=c99'
+let g:ale_cpp_cc_options = '-Wall -O2 -std=c++17'
 let g:ale_c_cppcheck_options = ''
 let g:ale_cpp_cppcheck_options = ''
 
 
 " Plug 'valloric/youcompleteme'
-let g:ycm_python_interpreter_path = ''
-let g:ycm_python_sys_path = []
-let g:ycm_extra_conf_vim_data = [
-  \  'g:ycm_python_interpreter_path',
-  \  'g:ycm_python_sys_path'
-  \]
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-let g:ycm_confirm_extra_conf = 0
 let g:ycm_min_num_identifier_candidate_chars = 2
-autocmd FileType * set completeopt+=popup
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_complete_in_strings = 1
+set completeopt+=popup
+let g:ycm_semantic_triggers =  {
+            \ 'c,cpp,cuda,python,java,go,erlang,perl': ['re!\w{2}'],
+            \ 'cs,lua,javascript': ['re!\w{2}'],
+            \ }
 
 
 " Plug 'vim-airline/vim-airline'
+let g:airline_theme='fruit_punch'
+let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-
-
-" Plug 'kien/rainbow_parentheses.vim'
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
-let g:rbpt_max = 16
-let g:rbpt_loadcmd_toggle = 0
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+let g:airline#extensions#tabline#right_sep = ' '
+let g:airline_left_sep = ' '
+let g:airline_right_sep = ' '
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
 
 " Plug 'tmhedberg/SimpylFold'

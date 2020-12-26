@@ -43,12 +43,13 @@ exec_as_root "apt update" && exec_as_root "apt install \
     zsh byobu vim \
     cmake python3-dev python3-pip build-essential \
     git curl \
-    gcc make \
+    gcc-8 g++-8 make \
     pkg-config autoconf automake \
     python3-docutils \
     libseccomp-dev libjansson-dev \
-    libyaml-dev libxml2-dev \
-    -y" && display_info "Applications installed"
+    libyaml-dev libxml2-dev -y" && \
+    exec_as_root "update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8" && \
+    display_info "Applications installed"
 
 
 # --- Pip install ---
@@ -56,7 +57,7 @@ display_info "Installing python module ..."
 python3 -m pip install -U \
     flake8 pylint
 
-# --- Build ---
+# --- Ctags ---
 display_info "Building universal-ctags ..."
 git clone https://github.com/universal-ctags/ctags
 cd ctags
@@ -69,7 +70,7 @@ cd ..
 
 # --- Vim ---
 display_info "Preparing environment for vim ..."
-cp vimrc ""$HOME"/.vimrc" && \
+cp vimrc ""$HOME"/.vimrc" && cp filetype.vim  "${HOME}/.vim/" && \
     display_info "Moved vimrc to "$HOME", Installing vim plugin ..."
 vim -es -u ""$HOME"/.vimrc" -i NONE -c "PlugInstall" -c "qa" && \
     display_info "Installation done"
