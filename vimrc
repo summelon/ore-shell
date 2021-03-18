@@ -63,10 +63,12 @@ Plug 'vim-scripts/Align'
 Plug 'mattn/emmet-vim'
 " Customize icon
 Plug 'ryanoasis/vim-devicons'
-" Cmake syntax
-Plug 'vhdirk/vim-cmake'
 " Floaterm
 Plug 'voldikss/vim-floaterm'
+" Syntax for all
+Plug 'sheerun/vim-polyglot'
+" Vim clap
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 call plug#end()
 
 
@@ -118,7 +120,7 @@ set exrc
 set secure
 
 " File type alias
-source $HOME/.vim/filetype.vim
+source $VIMRUNTIME/filetype.vim
 
 " Language setting---------------------------------------------
 " For cpp
@@ -170,7 +172,7 @@ let g:ale_echo_delay = 20
 let g:ale_lint_delay = 500
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
-let g:ale_linters_explicit=0
+let g:ale_linters_explicit=1
 let g:airline#extensions#lae#enabled=1
 let g:ale_c_parse_makefile=1
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
@@ -205,10 +207,12 @@ let g:ycm_semantic_triggers =  {
 let g:airline_theme='fruit_punch'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#right_sep = ' '
-let g:airline_left_sep = ' '
-let g:airline_right_sep = ' '
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = '|'
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
 

@@ -56,7 +56,7 @@ exec_as_root "apt update" && exec_as_root "apt install \
 # --- Pip install ---
 display_info "Installing python module ..."
 python3 -m pip install -U \
-    flake8 pylint
+    flake8 pylint bpython
 
 # --- Ctags ---
 display_info "Building universal-ctags ..."
