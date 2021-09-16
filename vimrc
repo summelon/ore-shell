@@ -153,6 +153,7 @@ highlight comment guifg=#928374 ctermfg=189 cterm=italic
 highlight SignColumn ctermbg=None
 highlight LineNr ctermfg=11
 highlight Folded cterm=bold ctermfg=DarkCyan ctermbg=None
+hi Function ctermfg=168 ctermbg=None cterm=bold
 
 
 " Plug 'dense-analysis/ale'
@@ -375,3 +376,6 @@ nnoremap   <leader>n    :FloatermNext<CR>
 tnoremap   <leader>n    <C-\><C-n>:FloatermNext<CR>
 nnoremap   <leader>t    :FloatermToggle<CR>
 tnoremap   <leader>t    <C-\><C-n>:FloatermToggle<CR>
+
+" Plug 'liuchengxu/vim-clap'
+let g:clap_theme = 'atom_dark'
