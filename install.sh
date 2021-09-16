@@ -42,8 +42,9 @@ display_info "Installing applications ..."
 exec_as_root "apt update" && exec_as_root "apt install \
     ncurses-term \
     zsh byobu vim \
-    cmake python3-dev python3-pip build-essential \
+    python3-dev python3-pip build-essential \
     git curl \
+    locales \
     gcc-8 g++-8 make \
     pkg-config autoconf automake \
     python3-docutils \
@@ -56,7 +57,7 @@ exec_as_root "apt update" && exec_as_root "apt install \
 # --- Pip install ---
 display_info "Installing python module ..."
 python3 -m pip install -U \
-    flake8 pylint bpython
+    flake8 pylint bpython cmake
 
 # --- Ctags ---
 display_info "Building universal-ctags ..."
@@ -94,6 +95,10 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 
     # Syntax-highlighting
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+# Fix misalignment bug
+localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+echo 'export LANG=en_US.utf8' >> ~/.zshrc
 
 display_info "ZSH setting done"
 
